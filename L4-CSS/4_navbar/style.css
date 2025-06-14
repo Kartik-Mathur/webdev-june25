@@ -1,0 +1,85 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.navbar{
+    border-bottom: 1px solid #ccc;
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.navbar div{
+    height: 100%;
+    /* background-color: orange; */
+}
+
+.nav-image{
+    width: 15%;
+}
+
+.nav-image img{
+    height: 100%;
+}
+
+.nav-search{
+    width: 20%;
+    display: flex;
+    align-items: center;
+}
+
+.nav-search-icon,
+.nav-search-input{
+    height: 50%;
+}
+
+.nav-search-icon{
+    width: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50% !important;
+}
+.nav-search-input{
+    width: 85%;
+    border: 0px;
+    outline: none;
+    font-size: 22px;
+}
+
+.nav-search-icon img{
+    height: 70%;
+}
+
+.nav-links{
+    width: 50%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 22px;
+}
+
+/* CSS FOR ANCHOR TAGS IN NAVBAR */
+.nav-links a{
+    text-decoration: none;
+    /* color: black; */
+}
+
+/* lvha: (link, visited, hover, active) */
+.nav-item:link{
+    color: black;
+}
+
+.nav-item:visited{
+    color: black;
+}
+
+.nav-item:hover{
+    text-decoration: underline;
+}
+
+.nav-item:active{
+    background-color: black;
+    color: white;
+}
