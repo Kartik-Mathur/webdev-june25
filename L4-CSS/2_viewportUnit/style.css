@@ -1,0 +1,11 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.container{
+    background-color: orange;
+    /* height: 50vh; */
+    width: 70vw;
+    margin: auto;
+}

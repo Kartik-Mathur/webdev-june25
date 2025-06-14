@@ -1,0 +1,35 @@
+.container{
+    border: 5px solid black;
+    display: flex;
+    flex-wrap: wrap-reverse;
+    /* flex-direction: column-reverse; */
+    height: 500px;
+    justify-content: space-evenly;
+    
+    /* align-items: baseline; */
+    align-content: space-between;
+}
+
+.item{
+    height: 100px;
+    width: 100px;
+    font-size: 38px;
+    background-color: orange;
+    margin: 20px;
+}
+
+/* .item-8{
+    padding-top: 20px;
+}
+
+.item-5{
+    padding-top: 120px;
+}
+
+.item-3{
+    padding-top: 220px;
+} */
+
+/* .item-14{
+    order: -1;
+} */
