@@ -1,0 +1,31 @@
+.container {
+    display: grid;
+    border: 1px solid black;
+    height: 300px;
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-areas:
+        "item1 item1 item2 item2" 
+        "item1 item1 item2 item2"
+        "item3 item4 item2 item2";
+}
+
+.item-1{
+    grid-area: item1;
+    background-color: antiquewhite;
+}
+
+.item-2{
+    grid-area: item2;
+    background-color: aquamarine;
+}
+
+.item-3{
+    grid-area: item3;
+    background-color: blueviolet;
+}
+
+.item-4{
+    grid-area: item4;
+    background-color: burlywood;
+}
