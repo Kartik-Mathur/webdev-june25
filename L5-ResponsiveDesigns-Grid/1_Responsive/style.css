@@ -1,0 +1,56 @@
+.container {
+    border: 1px solid black;
+}
+
+.card {
+    width: 400px;
+    height: 400px;
+    border: 1px solid red;
+    margin: 10px;
+}
+
+@media screen and (min-width: 1280px) {
+
+    .card-1,
+    .card-3,
+    .card-5 {
+        background-color: orange;
+    }
+
+    .card-2,
+    .card-4,
+    .card-6 {
+        background-color: rebeccapurple;
+    }
+
+}
+
+@media screen and (min-width: 769px) and (max-width: 1279px) {
+
+    .card-1,
+    .card-3,
+    .card-5 {
+        background-color: red;
+    }
+
+    .card-2,
+    .card-4,
+    .card-6 {
+        background-color: green;
+    }
+}
+
+@media screen and (max-width: 768px) {
+
+    .card-1,
+    .card-3,
+    .card-5 {
+        background-color: khaki;
+    }
+
+    .card-2,
+    .card-4,
+    .card-6 {
+        background-color: lavender;
+    }
+}

@@ -1,0 +1,11 @@
+ .card-1,
+ .card-3,
+ .card-5 {
+     background-color: khaki;
+ }
+
+ .card-2,
+ .card-4,
+ .card-6 {
+     background-color: lavender;
+ }
