@@ -1,0 +1,40 @@
+.box {
+    width: 100px;
+    height: 100px;
+    margin: auto;
+    background-color: orange;
+    margin-top: 100px;
+    animation-name: rotateOnZ;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    animation-fill-mode: forwards;
+}
+/* 
+@keyframes rotateOnZ {
+    from {
+        transform: translateX(-1200px) rotateZ(0deg) scale(0);
+    }
+
+    to {
+        transform: translateX(0px) rotateZ(5080deg) scale(4);
+        background-color: blueviolet;
+        margin-top: 300px;
+    }
+} */
+
+
+@keyframes rotateOnZ {
+    0% {
+        transform: translateX(-1200px) rotateZ(0deg) scale(0);
+    }
+
+    50%{
+        background-color: aqua;
+    }
+
+    100% {
+        transform: translateX(0px) rotateZ(5080deg) scale(4);
+        background-color: blueviolet;
+        margin-top: 300px;
+    }
+}

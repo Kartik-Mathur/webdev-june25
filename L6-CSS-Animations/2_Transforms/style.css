@@ -1,0 +1,16 @@
+.box {
+    width: 500px;
+    height: 500px;
+    background-color: orange;
+    margin: auto;
+
+    margin-top: 100px;
+
+    /* transform: rotateZ(45deg); */
+    /* transform: rotateY(45deg); */
+    transition-duration: 5s;
+}
+
+.box:hover {
+    transform: rotateZ(1080deg);
+}
