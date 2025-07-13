@@ -41,9 +41,11 @@ if (!obj[companyName]) {
 console.log(obj)
 // obj = {
 //     'codingblocks': {
-//         'dsa': ['Java', 'Python']
+//        'dsa' : [cpp]
 //     }
 // }
+// !obj['codingblocks']['dsa'] = ['cpp']
+
 if (!obj[companyName][courseCategory]) {
     obj[companyName][courseCategory] = [courseName]
 }
