@@ -21,7 +21,6 @@ function bartanDhona() {
     }, 3000);
 }
 
-
 sabziLaana(khanaBanana);
 
 let arr = [4, 5, 6, 1, 0, 9, 7, 42, 55, 68];
@@ -38,8 +37,8 @@ function waitASec() {
     }
 }
 
-function waitNSec(n){
-    for(let i = 0; i < n; i++){
+function waitNSec(n) {
+    for (let i = 0; i < n; i++) {
         waitASec();
     }
 }
