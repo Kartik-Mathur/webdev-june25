@@ -14,5 +14,9 @@ let newPromise = new Promise(function (res, rej) {
 });
 
 // newPromise.then(success, error);
-console.log("RAN then fun");
-newPromise.then(success).catch(error)
+setTimeout(() => {
+    console.log("RAN then fun");
+    newPromise.then(success).catch(error)
+}, 4000);
+
+
