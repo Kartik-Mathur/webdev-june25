@@ -2,7 +2,7 @@ let button = document.querySelector('button');
 const firstCallback = () => {
     console.log("First Callback function for click");
 }
-button.addEventListener('click',firstCallback )
+button.addEventListener('click',firstCallback)
 
 const secondCallback = () => {
     console.log("Second Callback function for click");
