@@ -7,5 +7,6 @@ let p = document.querySelector('p');
 // p.classList.remove('myPara');
 setInterval(()=>{
     // document.querySelector('body').classList.toggle('myPara');
+    // p.classList.toggle('myPara');
 }, 20);
 
