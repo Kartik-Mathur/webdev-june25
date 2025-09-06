@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo APP</title>
+    {{!-- Assume that we are inside static folder when we include this --}}
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Todo List</h1>
+
+        <form action="/todos" method="POST">
+            <input type="text" name="task" id="name" placeholder="Enter Task Name">
+            <input type="text" name="description" id="description" placeholder="Enter description">
+            <button type="submit">ADD TODO</button>
+        </form>
+
+        <ul class="taskList">
+            {{#each todos as |t|}}
+            <li class="task-item">
+                <a href="/todos/{{t.id}}" target="_blank">
+                    <span class="task-name">
+                        {{t.task}} <br>
+                        {{t.description}}
+                    </span>
+                </a>
+
+                <a href="/delete-todo/{{t.id}}">
+                    <button>❌</button>
+                </a>
+            </li>
+            {{/each}}
+        </ul>
+    </div>
+
+</body>
+
+</html>
