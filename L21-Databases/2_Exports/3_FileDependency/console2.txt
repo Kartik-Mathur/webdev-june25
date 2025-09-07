@@ -1,0 +1,16 @@
+let obj = {
+    a: 1,
+    b: 'hello'
+}
+
+undefined
+let newObj = obj 
+undefined
+newObj.a = 10;
+10
+obj
+{a: 10, b: 'hello'}
+newObj.x = "ttt"
+'ttt'
+obj
+{a: 10, b: 'hello', x: 'ttt'}

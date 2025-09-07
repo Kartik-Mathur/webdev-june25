@@ -1,3 +1,4 @@
+console.log("Running SUB");
 function sub(a, b) {
     return a - b;
 }
