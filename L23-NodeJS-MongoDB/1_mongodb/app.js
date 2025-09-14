@@ -3,8 +3,6 @@ const express = require('express');
 const app = express();
 const PORT = 4444;
 const { MongoClient } = require('mongodb');
-// or as an es module:
-// import { MongoClient } from 'mongodb'
 
 // Connection URL
 const url = 'mongodb://localhost:27017';
@@ -25,16 +23,30 @@ app.get('/students', async (req, res) => {
 })
 
 app.post('/student', async (req, res) => {
-    const {name, age, city} = req.body;
+    const { name, age, city } = req.body;
     console.log(name, age, city);
-     const students = db.collection('students');
-     const newStudent = await students.insertOne({
+    const students = db.collection('students');
+    const newStudent = await students.insertOne({
         name,
-        age,
+        age: +age,
         city
-     })
+    })
 
-     res.send(newStudent);
+    res.send(newStudent);
+})
+
+app.put('/students', async (req, res) => {
+    const { age, city } = req.body;
+    const students = db.collection('students');
+    await students.updateMany(
+        {age: +age},
+        {
+            $set: {
+                city
+            }
+        }
+    )
+    res.redirect('/students');
 })
 
 client.connect()
