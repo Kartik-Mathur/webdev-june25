@@ -38,3 +38,8 @@ db.students.updateMany(
 
 // Find students in banglore and sort them
 // according to their ages...
+db.students.find({
+    city: 'Banglore'
+}).sort({
+    age: 1
+})
