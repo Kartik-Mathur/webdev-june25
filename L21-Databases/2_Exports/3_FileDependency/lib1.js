@@ -8,4 +8,4 @@ module.exports = {
     a,
     lib2
 }
-*/
+*/ 
