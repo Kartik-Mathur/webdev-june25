@@ -15,12 +15,26 @@ let dbName = 'mydb';
 let db;
 
 app.get('/students', async (req, res) => {
-    const {skip} = req.query;
+    const { skip } = req.query;
 
     const students = db.collection('students');
-    const data = await students.find({}).skip(5*skip).limit(5).toArray();
+    // const data = await students.find({}).skip(5 * skip).limit(5).toArray();
+    const data = await students.find({}).toArray();
     // console.log(data);
     res.send(data);
+})
+
+app.post('/student', async (req, res) => {
+    const {name, age, city} = req.body;
+    console.log(name, age, city);
+     const students = db.collection('students');
+     const newStudent = await students.insertOne({
+        name,
+        age,
+        city
+     })
+
+     res.send(newStudent);
 })
 
 client.connect()
