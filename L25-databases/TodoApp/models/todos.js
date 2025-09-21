@@ -5,4 +5,10 @@ const todoSchema = new mongoose.Schema({
     description: String
 })
 
+todoSchema.pre('save', function (next) {
+    console.log("THIS", this);
+    this.randomData = 'abfavdsavysagvdhsva';
+    next();
+})
+
 module.exports = mongoose.model('todos', todoSchema);
