@@ -1,14 +1,19 @@
 const path = require('path');
 const express = require('express');
-var cookieParser = require('cookie-parser')
 var app = express()
-app.use(cookieParser())
 const PORT = 4444;
+const session = require('express-session');
+
+app.use(session({
+    secret: ',ansdjarbfk.esjrke sbrkfasfbgkrsagkarfjehfjaghkhhk vkh',
+    resave: false,
+    saveUninitialized: true,
+}))
 
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/login', (req, res) => {
-    if (req.cookies.user) {
+    if (req.session.user) {
         return res.redirect('/profile');
     }
     res.sendFile(path.join(__dirname, 'login.html'))
@@ -21,27 +26,16 @@ app.post('/login', (req, res) => {
         username,
         cnt: 0
     }
-    res.cookie('user', JSON.stringify(userData), {
-        httpOnly: true
-    });
+    req.session.user = userData;
     res.redirect('/profile');
 })
 
 app.get('/profile', (req, res) => {
-    console.log(req.cookies);
-    if (!req.cookies.user) {
-        return res.redirect('/login')
-    }
-
-    let userData = JSON.parse(req.cookies.user);
-    if (!userData.username) {
+    if (!req.session.user) {
         return res.redirect('/login');
     }
-    userData.cnt++;
-    res.cookie('user', JSON.stringify(userData), {
-        httpOnly: true
-    });
-
+    req.session.user.cnt++;
+    let userData = req.session.user;
     res.send(`Welcome to the page ${userData.username} for : ${userData.cnt}
             <br>
             <a href='/logout'>
@@ -51,8 +45,10 @@ app.get('/profile', (req, res) => {
 })
 
 app.get('/logout', (req, res) => {
-    res.cookie('user', "");
-    res.redirect('/login');
+    req.session.destroy(function (err) { 
+        res.redirect('/login');
+    })
+
 })
 
 
