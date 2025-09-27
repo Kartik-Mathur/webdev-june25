@@ -15,7 +15,7 @@ router.post('/signup', async (req, res, next) => {
             password,
             email: email || ''
         })
-        res.redirect('/auth/login');
+        res.redirect('/login');
     } catch (error) {
         res.render('error', {
             error
