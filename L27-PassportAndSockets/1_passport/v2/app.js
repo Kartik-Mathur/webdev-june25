@@ -3,6 +3,8 @@ const express = require('express');
 const { default: mongoose } = require('mongoose');
 const app = express();
 const PORT = 4444;
+require('dotenv').config()
+
 const passport = require('./passport/passport');
 const isLoggedIn = require('./middlewares/isLoggedIn');
 const isLoggedOut = require('./middlewares/isLoggedOut');
@@ -14,12 +16,12 @@ var store = new MongoDBStore({
     collection: 'mySessions'
 });
 
-app.use(session({ 
-    secret: 'abdfrv jhrjewrjwerje', 
-    resave: true, 
+app.use(session({
+    secret: 'abdfrv jhrjewrjwerje',
+    resave: true,
     saveUninitialized: true,
     store: store,
- }));
+}));
 
 
 app.use(passport.initialize());

@@ -1,6 +1,32 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const Users = require('../model/Users')
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+
+passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: "http://localhost:4444/auth/google/callback"
+},
+    async function (accessToken, refreshToken, profile, cb) {
+        console.log("ACCESS", accessToken, "Refresh", refreshToken, "Profile", profile);
+        try {
+            let newUser = await Users.findOne({
+                google_access_token: accessToken
+            })
+
+            if (newUser) return cb(null, newUser);
+            newUser = await Users.create({
+                username: profile.displayName,
+                google_access_token: accessToken,
+                profile_picture_google: profile.photos[0].value || ''
+            })
+            cb(null, newUser);
+        } catch (error) {
+            cb(error);
+        }
+    }
+));
 
 passport.use(new LocalStrategy(async function verify(username, password, cb) {
     try {
