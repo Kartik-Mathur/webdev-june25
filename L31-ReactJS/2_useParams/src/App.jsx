@@ -28,17 +28,17 @@ const App = () => {
       </ul>
 
       <Routes>
-        <Route path="/games/:id" element={<Games />} />
+        <Route path="/games/:id" element={<Games todos={todos} />} />
       </Routes>
     </div>
   );
 };
 
-function Games() {
+function Games({todos}) {
   const param = useParams();
   const id = param.id;
   // console.log(id);
-  let todo = initialTodos.filter((t) => t.id == id);
+  let todo = todos.filter((t) => t.id == id);
   if (todo.length > 0) todo = todo[0];
 
   return (
