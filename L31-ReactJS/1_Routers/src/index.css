@@ -1,0 +1,27 @@
+.navlink {
+  text-decoration: none;
+  margin-left: 10px;
+}
+
+.navlink:link {
+  color: black;
+}
+
+.navlink:visited {
+  color: black;
+}
+
+.navlink:hover {
+  color: blue;
+  text-decoration: underline;
+}
+
+.navlink:active {
+  color: white;
+  background-color: black;
+}
+
+.active{
+  text-decoration: underline;
+  color: rgb(74, 74, 253) !important;
+}
