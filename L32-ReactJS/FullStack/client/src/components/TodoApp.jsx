@@ -12,6 +12,7 @@ const TodoApp = () => {
   useEffect(() => {
     getTodos()
       .then((data) => {
+        console.log(data);
         setTodos(data);
       })
       .catch((err) => {
