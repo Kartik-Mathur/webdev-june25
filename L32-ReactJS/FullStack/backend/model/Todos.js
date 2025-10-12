@@ -2,11 +2,11 @@ import mongoose from "mongoose";
 
 const todoSchema = new mongoose.Schema({
     task: {
-        type: mongoose.SchemaTypes.String,
+        type: String,
         required: true,
     },
     description: {
-        type: mongoose.SchemaTypes.String,
+        type: String,
         required: true,
     }
 })
