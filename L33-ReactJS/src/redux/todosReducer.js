@@ -11,7 +11,7 @@ export const counterSlice = createSlice({
         setTodos: (state, action) => {
             console.log("Action", action);
             state.todos = action.payload.data
-        },
+        }
     },
 })
 
