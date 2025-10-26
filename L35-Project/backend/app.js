@@ -7,7 +7,8 @@ import cors from 'cors';
 import authRoutes from './http/routes/auth.routes.js';
 import env from './env.js';
 const app = express();
-
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 const PORT = env.PORT || 4444;
 app.use(cors({
     origin: env.CORS_ORIGIN
