@@ -3,17 +3,18 @@ dotenv.config();
 import express from 'express';
 import { createServer } from 'http';
 import { Server } from "socket.io";
-
-const PORT = process.env.PORT || 4444;
-
+import cors from 'cors';
+import authRoutes from './http/routes/auth.routes.js';
+import env from './env.js';
 const app = express();
-const Server = createServer(app);
 
+const PORT = env.PORT || 4444;
+app.use(cors({
+    origin: env.CORS_ORIGIN
+}));
+const httpServer = createServer(app);
+app.use('/api/auth', authRoutes);
 
-Server.listen(PORT, () => {
-    console.log("http://localhost:", PORT);
+httpServer.listen(PORT, () => {
+    console.log(`http://localhost:${PORT}`);
 })
-
-
-// npm i prisma -D
-// npm i prisma --save-dev
