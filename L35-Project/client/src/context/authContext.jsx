@@ -4,7 +4,7 @@ import { authApi } from "../api/authApi";
 const context = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
 
   //   function signin({email, password}) {
@@ -14,7 +14,8 @@ export const AuthProvider = ({ children }) => {
   async function signup({ name, email, password }) {
     const { user, token } = await authApi.signup({ name, email, password });
     // console.log(user, token);
-    return {user, token};
+    setUser(user);
+    return { user, token };
   }
 
   //   function logout() {
@@ -28,7 +29,9 @@ export const AuthProvider = ({ children }) => {
         // token,
         // signin,
         signup,
+        isLoggedIn: user ? true: false,
         // logout,
+
       }}
     >
       {children}

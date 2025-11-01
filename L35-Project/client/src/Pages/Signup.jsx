@@ -1,16 +1,21 @@
 import React, { useState } from "react";
 import useAuth from "../context/authContext";
+import auth from "../lib/auth";
+import { useNavigate } from "react-router";
 
 const Signup = () => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const { signup } = useAuth();
+  const navigate = useNavigate();
 
   const formSubmitHandler = async (e) => {
     e.preventDefault();
-    const data  = await signup({ name, email, password });
-    
+    const { token, user } = await signup({ name, email, password });
+    auth.token = token;
+    auth.user = user;
+    navigate("/dashboard");
   };
 
   return (
