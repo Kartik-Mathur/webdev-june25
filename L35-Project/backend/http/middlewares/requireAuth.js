@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken';
 import env from '../../env.js';
 import { PrismaClient } from '@prisma/client';
-import { email } from 'zod';
 let prisma = new PrismaClient();
 
 export default async function requireAuth(req, res, next) {
