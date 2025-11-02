@@ -8,7 +8,7 @@ import Signin from "./Pages/Signin";
 
 const App = () => {
   const { isLoggedIn } = useAuth();
-  console.log(isLoggedIn)
+
   return (
     <Routes>
       <Route

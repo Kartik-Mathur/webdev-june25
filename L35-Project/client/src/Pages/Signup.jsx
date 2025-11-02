@@ -19,6 +19,7 @@ const Signup = () => {
   };
 
   return (
+   <>
     <form onSubmit={formSubmitHandler}>
       <input
         onChange={(e) => setEmail(e.target.value)}
@@ -43,7 +44,11 @@ const Signup = () => {
 
       <button type="submit">Signup</button>
     </form>
+    Already a user? <button onClick={()=> navigate('/signin')}>Signin</button>
+   </>
   );
 };
 
 export default Signup;
+
+

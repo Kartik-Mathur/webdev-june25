@@ -35,7 +35,6 @@ export async function postSignin(req, res, next) {
 
     try {
         const { email, password } = req.body;
-
         let data = await signin({ email, password });
         res.status(200).json({
             data

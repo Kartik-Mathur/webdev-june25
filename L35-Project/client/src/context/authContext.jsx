@@ -1,15 +1,18 @@
 import React, { createContext, useContext, useState } from "react";
 import { authApi } from "../api/authApi";
+import auth from "../lib/auth";
 
 const context = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(auth.user || null);
   const [loading, setLoading] = useState(false);
 
-  //   function signin({email, password}) {
-  //     const {user, token} = authApi.signin({email, password});
-  //   }
+  async function signin({ email, password }) {
+    const { user, token } = await authApi.signin({ email, password });
+    setUser(user);
+    return { user, token };
+  }
 
   async function signup({ name, email, password }) {
     const { user, token } = await authApi.signup({ name, email, password });
@@ -18,20 +21,20 @@ export const AuthProvider = ({ children }) => {
     return { user, token };
   }
 
-  //   function logout() {
-
-  //   }
+  function logout() {
+    auth.logout();
+    setUser(null);
+  }
 
   return (
     <context.Provider
       value={{
         user,
         // token,
-        // signin,
+        signin,
         signup,
-        isLoggedIn: user ? true: false,
-        // logout,
-
+        isLoggedIn: user ? true : false,
+        logout,
       }}
     >
       {children}
