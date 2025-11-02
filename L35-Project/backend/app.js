@@ -7,6 +7,7 @@ import cors from 'cors';
 import authRoutes from './http/routes/auth.routes.js';
 import env from './env.js';
 import { socketAuth } from './socket/middleware/socket.auth.js';
+import chatHandlers from './socket/handlers/chat.handlers.js';
 const app = express();
 
 app.use(express.json());
@@ -30,6 +31,9 @@ io.use(socketAuth);
 
 io.on("connection", (socket) => {
     console.log("User connected", socket.id);
+
+    socket.join(`user:${socket.id}`); // rooms join krwalo...
+    chatHandlers(socket, io);
 });
 
 httpServer.listen(PORT, () => {
