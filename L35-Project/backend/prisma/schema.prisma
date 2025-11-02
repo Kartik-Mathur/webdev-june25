@@ -14,10 +14,45 @@ datasource db {
 }
 
 model User {
+  id            String               @id @default(uuid()) @db.Uuid
+  name          String?
+  email         String               @unique
+  password      String
+  createdAt     DateTime             @default(now())
+  updatedAt     DateTime             @updatedAt
+  conversationA DirectConversation[] @relation("UserA")
+  conversationB DirectConversation[] @relation("UserB")
+  Message       Message[]
+}
+
+model DirectConversation {
   id        String   @id @default(uuid()) @db.Uuid
-  name      String?
-  email     String   @unique
-  password  String
+  userAId   String   @db.Uuid
+  userBId   String   @db.Uuid
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  userA    User      @relation("UserA", fields: [userAId], references: [id], onDelete: Cascade)
+  userB    User      @relation("UserB", fields: [userBId], references: [id], onDelete: Cascade)
+  messages Message[]
+
+  @@unique([userAId, userBId])
+  @@index([userAId])
+  @@index([userBId])
+  @@index([updatedAt])
+}
+
+model Message {
+  id             String   @id @default(uuid()) @db.Uuid
+  conversationId String   @db.Uuid
+  senderId       String   @db.Uuid
+  text           String   @db.Text
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  conversation DirectConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  sender       User               @relation(fields: [senderId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId, createdAt])
+  @@index([senderId])
 }

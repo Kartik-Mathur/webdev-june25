@@ -6,7 +6,6 @@ import { Server } from "socket.io";
 import cors from 'cors';
 import authRoutes from './http/routes/auth.routes.js';
 import env from './env.js';
-import { socketAuth } from './socket/middleware/socket.auth.js';
 const app = express();
 
 app.use(express.json());
@@ -20,17 +19,6 @@ app.use(cors({
 
 const httpServer = createServer(app);
 app.use('/api/auth', authRoutes);
-
-const io = new Server(httpServer, {
-    cors: { origin: env.CORS_ORIGIN }
-});
-
-// Sockets ke middleware...
-io.use(socketAuth);
-
-io.on("connection", (socket) => {
-    console.log("User connected", socket.id);
-});
 
 httpServer.listen(PORT, () => {
     console.log(`http://localhost:${PORT}`);
