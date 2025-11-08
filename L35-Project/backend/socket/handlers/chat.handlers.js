@@ -14,7 +14,7 @@ async function getOrCreateConversation(userAId, userBId) {
 
     if (!conv) {
         conv = await prisma.directConversation.create({
-            where: {
+            data: {
                 userAId: a,
                 userBId: b
             }
@@ -25,14 +25,17 @@ async function getOrCreateConversation(userAId, userBId) {
 
 export default function (socket, io) {
     socket.on("chat:send", async (payload, cb) => {
-        try {
-            const { recieverId, text } = payload;
-            if (!recieverId.trim() || !text.trim()) return;
 
-            console.log(recieverId, text);
+        try {
+            const { receiverId, text } = payload;
+
+            if (!receiverId || !text.trim()) return;
+
+            console.log(receiverId, text);
 
             const userId = socket.user.id;
-            let conv = await getOrCreateConversation(userId, recieverId);
+            console.log(userId)
+            let conv = await getOrCreateConversation(userId, receiverId);
 
             let message = await prisma.message.create({
                 data: {
@@ -42,15 +45,17 @@ export default function (socket, io) {
                 },
                 include: {
                     sender: {
-                        id: true,
-                        name: true,
-                        email: true
+                        select: {
+                            id: true,
+                            name: true,
+                            email: true
+                        }
                     }
                 }
             })
 
             io.to(`user:${userId}`).emit("chat:new", message);
-            io.to(`user:${recieverId}`).emit("chat:new", message);
+            io.to(`user:${receiverId}`).emit("chat:new", message);
 
             cb?.({
                 ok: true,
@@ -58,6 +63,7 @@ export default function (socket, io) {
             })
 
         } catch (error) {
+            console.log(error)
             cb?.({
                 ok: false,
                 error

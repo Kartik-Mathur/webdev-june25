@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import auth from "../lib/auth";
 
 const Dashboard = () => {
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   const [socket, setSocket] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
   const [receiverId, setReceiverId] = useState("");
@@ -19,16 +19,40 @@ const Dashboard = () => {
         token: `${auth.token}`,
       },
     });
-    console.log(socket);
+
+    socket.on("connect", () => {
+      console.log("User Connected");
+    });
+
+    socket.on("disconnect", () => {
+      console.log("User Connected");
+    });
+
+    socket.on("chat:new", (data) => {
+      console.log(data);
+
+      setMessages([...messages, data]);
+    });
+
+    // console.log(socket);
     setSocket(socket);
     setIsConnected(true);
+    return () => socket.disconnect();
   }, []);
 
-  const chatHandler = function () {};
+  const chatHandler = function () {
+    socket.emit("chat:send", { receiverId, text }, (msg) => {
+      if (!msg.ok) {
+        return alert(msg.error);
+      }
+      // console.log(msg.message);
+      // setMessages([...messages, msg.message]);
+    });
+  };
 
   return (
     <div>
-      Welcome To Dashboard
+      Welcome To Dashboard : {user.name}
       <br />
       Status: {isConnected ? <span>Connected</span> : <span>Connecting..</span>}
       <br />
@@ -48,11 +72,21 @@ const Dashboard = () => {
           id=""
           value={text}
         />
-        <button disabled={!isConnected}>Send</button>
+        <button onClick={chatHandler} disabled={!isConnected}>
+          Send
+        </button>
       </div>
       <div className="chatbox">
         <div className="sidea">FRIENDS LIST</div>
-        <div className="sideb">CHAT DATA</div>
+        <div className="sideb">
+          {messages.map((m) => {
+            return (
+              <div key={m.id}>
+                {m.sender.id !== user.id ? m.sender.name : ""} {m.text}
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
