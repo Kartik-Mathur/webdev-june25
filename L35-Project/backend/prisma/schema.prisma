@@ -22,6 +22,7 @@ model User {
   updatedAt     DateTime             @updatedAt
   conversationA DirectConversation[] @relation("UserA")
   conversationB DirectConversation[] @relation("UserB")
+  // conversation DirectConversation[] @relation("User")
   Message       Message[]
 }
 

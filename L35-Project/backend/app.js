@@ -32,7 +32,8 @@ io.use(socketAuth);
 io.on("connection", (socket) => {
     console.log("User connected", socket.id);
 
-    socket.join(`user:${socket.id}`); // rooms join krwalo...
+    socket.join(`user:${socket.id}`);  // ROOM CREATE 
+
     chatHandlers(socket, io);
 });
 

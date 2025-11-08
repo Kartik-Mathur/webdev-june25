@@ -1,0 +1,13 @@
+.chatbox{
+    display: flex;
+    
+}
+.sidea{
+    width: 30%;
+    border: 1px solid black;
+}
+
+.sideb{
+    width: 80%;
+    border: 1px solid black;
+}

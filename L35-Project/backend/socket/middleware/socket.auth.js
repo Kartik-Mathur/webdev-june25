@@ -8,7 +8,7 @@ const { JWT_SECRET } = env;
 export async function socketAuth(socket, next) {
     try {
         const token = socket.handshake.auth?.token || socket.handshake.headers?.authorization?.split(" ")[1];
-        console.log("Socket token",token)
+        // console.log("Socket token",token)
         if (!token) throw new Error("Token missing");
 
         const decoded = jwt.verify(token, JWT_SECRET);
