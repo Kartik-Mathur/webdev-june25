@@ -1,13 +1,164 @@
-.chatbox{
-    display: flex;
-    
-}
-.sidea{
-    width: 30%;
-    border: 1px solid black;
+body {
+    background-color: #ece5dd;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.sideb{
-    width: 80%;
-    border: 1px solid black;
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.topbar {
+    background-color: #075e54;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.logout-btn {
+    background: #25d366;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 5px 15px;
+    cursor: pointer;
+}
+
+.logout-btn:hover {
+    background: #20b85a;
+}
+
+.status .connected {
+    color: #25d366;
+}
+
+.status .connecting {
+    color: #f0ad4e;
+}
+
+.chatbox {
+    display: flex;
+    flex: 1;
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+}
+
+.sidea {
+    width: 30%;
+    background-color: #f0f2f5;
+    border-right: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+}
+
+.friends-header {
+    background-color: #ededed;
+    padding: 15px;
+    font-weight: bold;
+    border-bottom: 1px solid #ccc;
+}
+
+.friend-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+}
+
+.friend-item {
+    padding: 12px 15px;
+    cursor: pointer;
+    border-bottom: 1px solid #ddd;
+    transition: background 0.2s;
+}
+
+.friend-item:hover {
+    background-color: #e9edef;
+}
+
+.sideb {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    background: #efeae2;
+    position: relative;
+}
+
+.messages {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.message {
+    display: flex;
+    flex-direction: column;
+    margin: 5px 0;
+    max-width: 70%;
+}
+
+.message.mine {
+    align-self: flex-end;
+    text-align: right;
+}
+
+.message.theirs {
+    align-self: flex-start;
+}
+
+.message .sender {
+    font-size: 12px;
+    color: #555;
+    margin-bottom: 3px;
+}
+
+.message .bubble {
+    background-color: #dcf8c6;
+    padding: 8px 12px;
+    border-radius: 7px;
+    display: inline-block;
+}
+
+.message.mine .bubble {
+    background-color: #daf8cb;
+}
+
+.message.theirs .bubble {
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+.sendmessage {
+    display: flex;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-top: 1px solid #ccc;
+}
+
+.sendmessage input {
+    flex: 1;
+    border: none;
+    outline: none;
+    border-radius: 20px;
+    padding: 10px 15px;
+    margin-right: 8px;
+    background-color: #fff;
+}
+
+.sendmessage button {
+    background-color: #128c7e;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+.sendmessage button:hover {
+    background-color: #0b6e63;
 }

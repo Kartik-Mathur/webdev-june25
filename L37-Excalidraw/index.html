@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #mycanvas {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .button-group{
+            position: fixed;
+            top: 10px;
+            left: 50px;
+        }
+
+        #line,
+        #ellipse{
+            font-size: 40px;
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="button-group">
+        <button id="line">/</button>
+        <button id="ellipse">⊙</button>
+    </div>
+    <canvas id="mycanvas"></canvas>
+
+    <script src="./script.js"></script>
+</body>
+
+</html>
