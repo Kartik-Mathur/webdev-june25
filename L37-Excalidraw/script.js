@@ -38,20 +38,24 @@ function redraw() {
 
 function drawEllipse(startX, startY, endX, endY, color = 'black', isDashed = false) {
 
+    let height = Math.abs(endX - startX);
+    let width = Math.abs(endY - startY);
+    if (width < 1 || height < 1) return;
+
+    let rx = height / 2;
+    let ry = width / 2;
+
+    let cx = Math.min(startX, endX) + rx;
+    let cy = Math.min(startY, endY) + ry;
+
     pen.save();
-
-    let rx = Math.abs(endX - startX) / 2;
-    let ry = Math.abs(endY - startY) / 2;
-    let cx = startX + rx;
-    let cy = startY + ry;
-
-    pen.beginPath();
     if (isDashed) {
         pen.setLineDash([5, 5]);
     }
+    pen.beginPath();
     pen.lineWidth = 5;
     pen.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
-    pen.strokeStyle = 'black';
+    pen.strokeStyle = color;
     pen.stroke();
     pen.setLineDash([]);
     pen.restore();
