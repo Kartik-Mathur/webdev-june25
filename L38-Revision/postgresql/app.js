@@ -38,10 +38,100 @@ app.get('/students', async (req, res) => {
     res.status(200).json(student);
 })
 
-app.put('/student', (req, res) => { })
+app.post('/add-language', async (req, res) => {
+    const { studentId, name } = req.body;
+    let language = await prisma.language.create({
+        data: {
+            studentId,
+            name
+        }
+    })
 
-app.delete('/student', (req, res) => { })
+    res.json(language)
+})
+
+app.get('/student', async (req, res) => {
+    const { id } = req.query;
+
+    let student = await prisma.student.findUnique({
+        where: {
+            id
+        },
+        include: {
+            languages: {
+                select: {
+                    name: true
+                }
+            }
+        }
+    })
+
+    res.json(student);
+})
+
+// app.put('/student', (req, res) => {
+
+// })
+
+app.delete('/student', async (req, res) => {
+    const { id } = req.body;
+    await prisma.student.delete({
+        where: {
+            id
+        }
+    })
+    res.json("DELETED SUCCESS");
+})
+
+app.post('/addplayer', async (req, res) => {
+    const { name } = req.body;
+    let player = await prisma.players.create({
+        data: {
+            name
+        }
+    })
+    res.json(player);
+})
+
+app.post('/addsport', async (req, res) => {
+    const { name } = req.body;
+    let sport = await prisma.sports.create({
+        data: {
+            name
+        }
+    })
+    res.json(sport);
+})
+
+app.post('/addgame', async (req, res) => {
+    const { playerId, sportsId } = req.body;
+    let game = await prisma.allSports.create({
+        data: {
+            playerId,
+            sportsId
+        }
+    })
+
+    res.json(game);
+})
+
+app.get('/player-games', async (req, res) => {
+    const { playerId } = req.query;
+    let allGames = await prisma.allSports.findMany({
+        where: {
+            playerId
+        },
+        include: {
+            sports: {
+                select: {
+                    name: true
+                }
+            }
+        }
+    })
+    res.json(allGames);
+})
 
 app.listen(PORT, () => {
     console.log(`http://localhost:` + PORT);
-});
+}); 

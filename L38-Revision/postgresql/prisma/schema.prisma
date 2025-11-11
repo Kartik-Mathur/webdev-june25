@@ -14,8 +14,36 @@ datasource db {
 }
 
 model Student {
-  id    String @id @default(uuid())
-  name  String
-  age   Int?
-  email String @unique
+  id        String     @id @default(uuid())
+  name      String
+  age       Int?
+  email     String     @unique
+  languages Language[]
+}
+
+model Language {
+  id        String  @id @default(uuid())
+  name      String
+  studentId String
+  student   Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+}
+
+model Players {
+  id        String      @id @default(uuid())
+  name      String
+  allSports AllSports[]
+}
+
+model AllSports {
+  id       String  @id @default(uuid())
+  playerId String
+  sportsId String
+  player   Players @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  sports   Sports  @relation(fields: [sportsId], references: [id], onDelete: Cascade)
+}
+
+model Sports {
+  id        String      @id @default(uuid())
+  name      String
+  allSports AllSports[]
 }
