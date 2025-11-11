@@ -30,8 +30,10 @@ function redraw() {
             drawLine(s.startX, s.startY, s.endX, s.endY, 'black', false);
         }
         else if (s.type === 'ellipse') {
-            // PENDING 
             drawEllipse(s.startX, s.startY, s.endX, s.endY, 'black', false);
+        }
+        else if (s.type === 'rectangle') {
+            drawRectangle(s.startX, s.startY, s.endX, s.endY, 'black', false);
         }
     }
 }
@@ -61,6 +63,26 @@ function drawEllipse(startX, startY, endX, endY, color = 'black', isDashed = fal
     pen.restore();
 }
 
+function drawRectangle(startX, startY, endX, endY, color, isDashed) {
+    let height = Math.abs(endX - startX);
+    let width = Math.abs(endY - startY);
+
+    let sx = Math.min(startX, endX);
+    let sy = Math.min(startY, endY);
+
+    pen.save();
+    if (isDashed) {
+        pen.setLineDash([5, 5]);
+    }
+    pen.beginPath();
+    pen.lineWidth = 5;
+    pen.strokeRect(sx, sy, width, height);
+    pen.strokeStyle = color;
+    pen.stroke();
+    pen.setLineDash([]);
+    pen.restore();
+}
+
 function drawLine(startX, startY, endX, endY, color, isDashed) {
 
     pen.save(); // Yaha tak jo pen ki settings hai unhe bhool jaao
@@ -79,21 +101,29 @@ function drawLine(startX, startY, endX, endY, color, isDashed) {
 
 canvas.addEventListener('mousedown', e => {
     const pos = getPosition(e);
-    startX = pos.x;
-    startY = pos.y;
-    drawing = true;
+    if (currentShape === 'line' || currentShape === 'ellipse') {
+        startX = pos.x;
+        startY = pos.y;
+        drawing = true;
+    }
 }) // Jab pehli baar click krenge
 
 canvas.addEventListener('mousemove', e => {
     if (!drawing) return;
+    // Pehle saari shapes ko draw krdo
     redraw();
 
     const { x, y } = getPosition(e);
     if (currentShape === 'line') {
+        // DASHED LINE DRAW KRO TO SHOW KYA DRAW HOGA AGAR KIA TOH
         drawLine(startX, startY, x, y, "gray", true);
     }
     else if (currentShape === 'ellipse') {
+        // DASHED ELLIPSE DRAW KRO TO SHOW KYA DRAW HOGA AGAR KIA TOH
         drawEllipse(startX, startY, x, y, "gray", true);
+    }
+    else if (currentShape === 'rectangle') {
+        drawRectangle(startX, startY, x, y, "gray", true);
     }
 
 }) // Jab mouse ko move krenge
@@ -114,7 +144,7 @@ canvas.addEventListener('mouseup', e => {
         })
         // console.log(shapes);
     }
-    else if (currentShape === 'ellipse') {
+    else if (currentShape === 'ellipse' || currentShape === 'rectangle') {
         const endX = pos.x;
         const endY = pos.y;
         shapes.push({
@@ -126,6 +156,7 @@ canvas.addEventListener('mouseup', e => {
             type: currentShape
         })
     }
+    // Jo bhi mera shapes ka array hai usse canvas par draw krdo
     redraw();
     drawing = false;
 }) // Jab mouse click ko chhod denge
@@ -137,4 +168,8 @@ document.querySelector('#line').addEventListener('click', e => {
 
 document.querySelector('#ellipse').addEventListener('click', e => {
     currentShape = 'ellipse'
+})
+
+document.querySelector('#rectangle').addEventListener('click', e => {
+    currentShape = 'rectangle'
 })
