@@ -27,13 +27,31 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
     console.log("Client connected:", socket.id);
 
-    // socket.on("join-board", async ({ boardId }) => {
+    socket.on("join-board", async ({ boardId }) => {
+        if (!boardId) return;
 
-    // });
+        socket.join(boardId);
+        console.log(`${socket.id} joined board ${boardId}`);
+        try {
+            const board = await Board.findById(boardId);
+            if (board) {
+                socket.emit("board-init", {
+                    boardId: board._id,
+                    title: board.title,
+                    elements: board.elements || [],
+                });
+            } else {
+                socket.emit("board-error", { message: "Board not found" });
+            }
+        } catch (err) {
+            console.error("Error loading board on join:", err);
+            socket.emit("board-error", { message: "Server error while loading board" });
+        }
+    });
 
-    // socket.on("elements-update", async ({ boardId, elements }) => {
+    socket.on("elements-update", async ({ boardId, elements }) => {
 
-    // });
+    });
 
     socket.on("disconnect", () => {
         console.log("Client disconnected:", socket.id);

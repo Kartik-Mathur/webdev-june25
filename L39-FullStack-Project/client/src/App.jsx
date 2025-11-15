@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { io } from "socket.io-client";
 import axios from "./api/axios";
+import CanvasBoard from "./components/CanvasBoard";
 
 const App = () => {
   const [tool, setTool] = useState("select");
@@ -20,6 +21,33 @@ const App = () => {
 
     return () => s.disconnect();
   }, []);
+
+  useEffect(() => {
+    if (!socket) return;
+
+    const handleBoardInit = (payload) => {
+      console.log("board-init", payload);
+      // isApplyingRemoteUpdate.current = true;
+      if (payload._id) setBoardId(payload._id);
+      if (payload.title) setTitle(payload.title);
+      if (Array.isArray(payload.elements)) setElements(payload.elements);
+      // isApplyingRemoteUpdate.current = false;
+    };
+
+    const handleElementsUpdate = ({ elements }) => {
+      // isApplyingRemoteUpdate.current = true;
+      setElements(elements);
+      // isApplyingRemoteUpdate.current = false;
+    };
+
+    const handleBoardError = (payload) => {
+      console.error("board-error:", payload);
+    };
+
+    socket.on("board-init", handleBoardInit);
+    socket.on("elements-update", handleElementsUpdate);
+    socket.on("board-error", handleBoardError);
+  }, [socket]);
 
   useEffect(() => {
     if (!socket) return;
@@ -52,9 +80,20 @@ const App = () => {
     initBoard();
   }, [socket]);
 
+  useEffect(() => {
+    if (!boardId) return;
+    socket.emit("join-board", { boardId });
+  }, [boardId]);
+
   return (
     <div>
       <Toolbar activeTool={tool} setActiveTool={setTool} />
+      <CanvasBoard
+        elements={elements}
+        setElements={setElements}
+        boardId={boardId}
+        tool={tool}
+      />
     </div>
   );
 };
