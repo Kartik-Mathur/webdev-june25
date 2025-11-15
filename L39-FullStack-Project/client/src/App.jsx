@@ -26,7 +26,7 @@ const App = () => {
     if (!socket) return;
 
     const handleBoardInit = (payload) => {
-      console.log("board-init", payload);
+      // console.log("board-init", payload);
       // isApplyingRemoteUpdate.current = true;
       if (payload._id) setBoardId(payload._id);
       if (payload.title) setTitle(payload.title);
@@ -93,6 +93,7 @@ const App = () => {
         setElements={setElements}
         boardId={boardId}
         tool={tool}
+        setTool={setTool}
       />
     </div>
   );
