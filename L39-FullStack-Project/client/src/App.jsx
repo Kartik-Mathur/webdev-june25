@@ -9,7 +9,7 @@ const App = () => {
   const [tool, setTool] = useState("select");
   const [socket, setSocket] = useState(null);
   const [boardId, setBoardId] = useState("");
-  const [board, setBoard] = useState("");
+  // const [board, setBoard] = useState("");
   const [elements, setElements] = useState([]);
   const [title, setTitle] = useState("");
 
@@ -28,18 +28,25 @@ const App = () => {
       const url = new URL(window.location.href);
       let idFromUrl = url.searchParams.get("boardId");
       let board = null;
-      console.log(idFromUrl);
       if (idFromUrl) {
         let { data } = await axios.get(`/api/boards/getboard/${idFromUrl}`);
         board = data;
+
+        setTitle(board.title);
+        setBoardId(board._id);
+        setElements(board.elements);
       } else {
         let { data } = await axios.post(`/api/boards/createboard`, {
           title: "demo-board",
         });
         board = data;
+        setTitle(board.title);
+        setBoardId(board._id);
+        setElements(board.elements);
+
+        url.searchParams.set("boardId", board._id);
+        window.history.replaceState({}, "", url);
       }
-      console.log(board);
-      url.searchParams.set("boardId", board._id);
     };
 
     initBoard();

@@ -3,7 +3,7 @@ const Board = require("../models/boardModel");
 module.exports.createBoard = async function (req, res, next) {
     try {
         const { title, ownerId, elements } = req.body;
-        console.log(title)
+       
         if (!title) {
             return res.status(400).json({ message: "Title is required" });
         }
@@ -30,7 +30,7 @@ module.exports.getBoard = async function (req, res, next) {
         }
 
         const board = await Board.findOne({
-            title,
+            _id: boardId,
         });
 
         return res.status(201).json(board);
