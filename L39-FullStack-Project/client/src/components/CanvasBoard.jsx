@@ -1,11 +1,14 @@
 import React from "react";
+import { useEffect } from "react";
 import { useRef } from "react";
 
 const CanvasBoard = ({ elements, setElements, tool, boardId, setTool }) => {
   const canvasRef = useRef(null);
-
-  
-
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const pen = canvas.getContext('2d');
+  }, [elements]);
   return (
     <>
       <canvas
