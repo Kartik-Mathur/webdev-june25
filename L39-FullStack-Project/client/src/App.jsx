@@ -51,6 +51,22 @@ const App = () => {
 
   useEffect(() => {
     if (!socket) return;
+    socket.emit("elements-update", { boardId, elements });
+
+    return () => {
+      socket.off("elements-update");
+    };
+  }, [socket, elements]);
+
+  useEffect(() => {
+    if (!socket) return;
+    socket.on("elements-update", ({ elements }) => {
+      setElements(elements);
+    });
+  }, [socket]);
+
+  useEffect(() => {
+    if (!socket) return;
 
     const initBoard = async () => {
       const url = new URL(window.location.href);

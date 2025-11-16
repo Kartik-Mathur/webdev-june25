@@ -1,6 +1,6 @@
 import React from "react";
 
-let tools = ["select", "pen", "circle", "rectangle"];
+let tools = ["select", "pen", "ellipse", "rectangle"];
 
 const Toolbar = ({ setActiveTool, activeTool }) => {
   return (

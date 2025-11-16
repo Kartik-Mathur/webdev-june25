@@ -51,7 +51,19 @@ io.on("connection", (socket) => {
     });
 
     socket.on("elements-update", async ({ boardId, elements }) => {
+        if (!boardId || !Array.isArray(elements)) return;
 
+        try {
+            await Board.findByIdAndUpdate(
+                boardId,
+                { elements, updatedAt: new Date() }
+            );
+            socket.to(boardId).emit("elements-update", { elements });
+
+        } catch (err) {
+
+            console.error("Error saving elements to DB:", err);
+        }
     });
 
     socket.on("disconnect", () => {

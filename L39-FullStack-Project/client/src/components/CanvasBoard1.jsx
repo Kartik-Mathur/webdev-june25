@@ -7,7 +7,7 @@ const CanvasBoard = ({ elements, setElements, tool, boardId, setTool }) => {
   const [drawing, setDrawing] = useState(false);
   const [newElement, setNewElement] = useState({});
   const canvasRef = useRef(null);
-  const [currentElementId, setCurrentElementId] = useState(null);
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -16,26 +16,30 @@ const CanvasBoard = ({ elements, setElements, tool, boardId, setTool }) => {
     elements.forEach((el) => drawElement(ctx, el));
   }, [elements]);
 
+  // console.log(tool);
+
   function handleMouseDown(e) {
     const rect = canvasRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
+    // let drawingTools = ['rectangle', 'pen','ellipse'];
+    // let indx = drawingTools.findIndex(tool);
+    // if(indx !== -1) setDrawing(true);
+
     if (tool === "pen") {
       const id = uuidv4();
-      let newElement = {
+      setNewElement({
         id,
         type: "pen",
         points: [{ x, y }],
         strokeColor: "black",
         strokeWidth: 2,
-      };
-      setElements((prev) => [...prev, newElement]);
-      setCurrentElementId(id);
+      });
       setDrawing(true);
     } else if (tool === "rectangle") {
       const id = uuidv4();
-      let newElement = {
+      setNewElement({
         id,
         type: "rectangle",
         x,
@@ -44,14 +48,12 @@ const CanvasBoard = ({ elements, setElements, tool, boardId, setTool }) => {
         height: 0,
         strokeColor: "#000000",
         strokeWidth: 2,
-      };
-      setElements((prev) => [...prev, newElement]);
-      setCurrentElementId(id);
+      });
       setDrawing(true);
     } else if (tool === "ellipse") {
       const id = uuidv4();
 
-      let newElement = {
+      setNewElement({
         id,
         type: "ellipse",
         x,
@@ -60,17 +62,14 @@ const CanvasBoard = ({ elements, setElements, tool, boardId, setTool }) => {
         height: 0,
         strokeColor: "black",
         strokeWidth: 2,
-      };
-      setElements((prev) => [...prev, newElement]);
-      setCurrentElementId(id);
+      });
       setDrawing(true);
     }
   }
 
   function handleMouseUp(e) {
     setDrawing(false);
-    setCurrentElementId(null);
-    // setElements((prev) => [...prev, newElement]);
+    setElements((prev) => [...prev, newElement]);
     // console.log(newElement);
   }
 
@@ -80,23 +79,19 @@ const CanvasBoard = ({ elements, setElements, tool, boardId, setTool }) => {
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    setElements((allElements) => {
-      return allElements.map((el) => {
-        if (el.id !== currentElementId) return el;
-
-        if (el.type === "pen") {
-          return {
-            ...el,
-            points: [...el.points, { x, y }],
-          };
-        } else if (el.type === "rectangle" || el.type === "ellipse") {
-          return {
-            ...el,
-            width: x - el.x,
-            height: y - el.y,
-          };
-        }
-      });
+    setNewElement((el) => {
+      if (el.type === "pen") {
+        return {
+          ...el,
+          points: [...el.points, { x, y }],
+        };
+      } else if (el.type === "rectangle" || el.type === "ellipse") {
+        return {
+          ...el,
+          width: x - el.x,
+          height: y - el.y,
+        };
+      }
     });
   }
 
