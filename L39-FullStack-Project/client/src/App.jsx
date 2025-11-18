@@ -103,6 +103,7 @@ const App = () => {
 
   return (
     <div>
+      <div>{title} - {boardId ? boardId : 'Connecting......' }</div>
       <Toolbar activeTool={tool} setActiveTool={setTool} />
       <CanvasBoard
         elements={elements}

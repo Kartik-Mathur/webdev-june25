@@ -8,6 +8,8 @@ const CanvasBoard = ({ elements, setElements, tool, boardId, setTool }) => {
   const [newElement, setNewElement] = useState({});
   const canvasRef = useRef(null);
   const [currentElementId, setCurrentElementId] = useState(null);
+  const [isSelected, setIsSelected] = useState(false);
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -20,6 +22,10 @@ const CanvasBoard = ({ elements, setElements, tool, boardId, setTool }) => {
     const rect = canvasRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
+
+    if (tool === "select") {
+      return;
+    }
 
     if (tool === "pen") {
       const id = uuidv4();
