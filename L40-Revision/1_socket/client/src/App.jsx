@@ -22,14 +22,19 @@ const App = () => {
       socket.on("HEY", ({ message }) => {
         console.log("HEY EVENT AAYA", message);
       });
-
-      socket.on("tata-price", ({ price }) => {
-        console.log("TATA", price);
+      let stocksList = ["tata", "hyundai", "maruti"];
+      stocksList.forEach((stock) => {
+        socket.on(`${stock}-price`, ({ price }) => {
+          console.log(stock, price);
+        });
       });
+      // socket.on("tata-price", ({ price }) => {
+      //   console.log("TATA", price);
+      // });
 
-      socket.on("hyundai-price", ({ price }) => {
-        console.log("Hyundai", price);
-      });
+      // socket.on("hyundai-price", ({ price }) => {
+      //   console.log("Hyundai", price);
+      // });
     });
   }, [socket]);
 
@@ -41,11 +46,16 @@ const App = () => {
     socket.emit("subscribe-hyundai");
   };
 
+  const subscribeMaruti = () => {
+    socket.emit("subscribe-maruti");
+  };
+
   return (
     <div>
       Stock Prices
       <button onClick={subscribeTata}>Tata</button>
       <button onClick={subscribeHyundai}>Hyundai</button>
+      <button onClick={subscribeMaruti}>Maruti</button>
     </div>
   );
 };
