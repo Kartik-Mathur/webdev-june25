@@ -1,4 +1,6 @@
 const express = require('express');
+const { default: mongoose } = require('mongoose');
+const User = require('./models/User');
 const app = express();
 const PORT = 4444;
 
@@ -20,6 +22,15 @@ app.get('/user', (req, res) => {
         email: 'kartik@cb.com',
         password: 'password'
     })
+})
+
+app.get('/checkuser', async (req, res) => {
+    const { email } = req.query;
+    let user = await User.findOne({
+        email
+    })
+
+    res.send(user);
 })
 
 app.listen(PORT, () => {
