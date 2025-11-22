@@ -1,0 +1,19 @@
+{
+  "name": "l41-testing",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha \"tests/**/*.test.js\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "chai": "^4.5.0",
+    "chai-http": "^4.4.0",
+    "express": "^5.1.0",
+    "mocha": "^11.7.5",
+    "mongoose": "^9.0.0"
+  }
+}
