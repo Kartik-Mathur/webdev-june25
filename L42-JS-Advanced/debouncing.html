@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+
+    <input id="inp" type="text" placeholder="Enter product name..">
+
+    <script>
+        let inp = document.querySelector('#inp');
+
+        function debounce(fn) {
+            let id;
+            return function () {
+                clearTimeout(id);
+
+                id = setTimeout(() => {
+                    fn();
+                }, 1000);
+            }
+        }
+
+        inp.addEventListener('input', debounce(function () {
+            console.log(inp.value);
+        }))
+
+    </script>
+
+</body>
+
+</html>
