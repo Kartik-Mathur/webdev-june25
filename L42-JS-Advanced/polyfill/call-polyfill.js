@@ -1,5 +1,6 @@
 function fun(name, college, no) {
     console.log(name, college, no);
+    console.log(this);
     this.name = name;
     this.college = college;
     this.no = no;
@@ -24,6 +25,8 @@ console.log(obj1)
 console.log("----------------- INBUILT -----------------")
 console.log("");
 
+// fun.myCall(obj, "ABC", "DEF", 123); // myCall ke andar `this` will be fun
+// Because of implicit binding
 Function.prototype.myCall = function (obj, ...args) {
     // args: [name, college]
     /*
@@ -34,14 +37,14 @@ Function.prototype.myCall = function (obj, ...args) {
      */
     let fun = this;
     // fun, fun ke andar obj chahiye as this
-    obj.fun = fun;
+    obj.f = fun;
     // obj: {
     //     a: 1,
     //     b: true,
-    //     fun: fun(){}
+    //     f: fun(){}
     // }
-    obj.fun(...args);
-    delete obj["fun"];
+    obj.f(...args);
+    delete obj["f"];
 }
 
 console.log("------------------ USER DEFINED --------------------")
