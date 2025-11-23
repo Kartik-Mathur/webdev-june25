@@ -25,10 +25,12 @@
                 if (isCalled == true) {
                     return;
                 }
-
+                btn.setAttribute('disabled', true);
                 isCalled = true;
                 fn();
                 setTimeout(() => {
+                    btn.removeAttribute('disabled');
+
                     isCalled = false;
                 }, 3000);
             }
