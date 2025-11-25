@@ -63,3 +63,11 @@ db.marks.find({
         $gte: 22
     }
 }).skip(10).limit(10)
+
+
+// Projections
+db.marks.find({}, {
+    _id: 0,
+    name: 1,
+    age: 1
+}).toArray()
