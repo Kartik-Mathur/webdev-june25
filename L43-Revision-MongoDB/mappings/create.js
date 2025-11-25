@@ -38,3 +38,47 @@ db.orders.insertMany([
     { "orderId": "o115", "userId": "u10", "product": "Gaming Chair", "price": 11000, "quantity": 1, "dateOfPurchase": "2025-01-22" }
 ]
 )
+
+// LEFT JOIN
+db.users.aggregate({
+    $lookup: {
+        localField: "_id",
+        from: 'orders',
+        foreignField: "userId",
+        as: "placedOrders"
+    }
+})
+
+// INNER JOIN
+// $unwind or $match
+db.users.aggregate([
+    {
+        $lookup: {
+            localField: "_id",
+            from: 'orders',
+            foreignField: "userId",
+            as: "placedOrders"
+        }
+    },
+    {
+        $unwind: "$placedOrders"
+    }
+])
+
+db.users.aggregate([
+    {
+        $lookup: {
+            localField: "_id",
+            from: 'orders',
+            foreignField: "userId",
+            as: "placedOrders"
+        }
+    },
+    {
+        $match: {
+            placedOrders: {
+                $ne: []
+            }
+        }
+    }
+])
