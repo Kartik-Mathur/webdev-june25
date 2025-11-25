@@ -7,7 +7,6 @@ db.teams.insertMany([
 ]
 )
 
-
 db.createCollection("players")
 db.players.insertMany([
     { "_id": "p1", "playerName": "Amit Sharma", "age": 24, "teamId": "t1" },
@@ -44,5 +43,22 @@ db.matches.insertMany([
 
 // Fetch all the matches, we need team details and player details
 db.matches.aggregate([
-    
+    {
+        $lookup: {
+            localField: "playerId",
+            from: "players",
+            foreignField: "_id",
+            as: "Player_Details"
+        }
+    },
+    {
+        $lookup: {
+            localField: "teamId",
+            from: 'teams',
+            foreignField: "_id",
+            as: 'Team_Details'
+        }
+    }
 ])
+
+ 
