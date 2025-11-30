@@ -1,0 +1,17 @@
+{
+  "name": "1_sessions",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "cookie": "^1.1.1",
+    "cookie-parser": "^1.4.7",
+    "express": "^5.1.0"
+  }
+}

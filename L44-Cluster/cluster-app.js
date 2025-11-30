@@ -17,6 +17,8 @@ if (cluster.isPrimary) {
     const express = require('express');
     const app = express();
     const PORT = 4444;
+    const { exec, spawn } = require('child_process');
+
 
     app.set('view engine', 'hbs');
     app.use(express.urlencoded({ extended: true }));
@@ -25,6 +27,31 @@ if (cluster.isPrimary) {
         res.send(`Hello ${process.pid}`);
     })
 
+    app.get('/fast', (req, res) => {
+
+        const child = spawn("node", ["heavyWork.js"]);
+        let error = ""
+        let output = "";
+        child.stdout.on('data', (data) => {
+            output += data.toString();
+        })
+
+        child.stderr.on('data', (data) => {
+            error += data.toString();
+        })
+
+        child.on('close', (code) => {
+            if (error) {
+                console.log(error);
+                return;
+            }
+
+            res.json({
+                output,
+                message: `Result from ${process.pid}`
+            })
+        })
+    })
 
     app.listen(PORT, () => {
         console.log(`http://localhost:` + PORT);
