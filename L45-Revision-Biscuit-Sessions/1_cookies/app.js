@@ -1,7 +1,8 @@
 const path = require('path');
 const express = require('express');
 const cookieParser = require('cookie-parser');
-// const cookie = require('cookie');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const app = express();
 const PORT = 4444;
 app.use(cookieParser());
@@ -9,53 +10,47 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/signup', (req, res) => {
-    let cookieData = {
-        user: "Vikas",
-        count: 1
-    }
-
-    res.cookie("data", JSON.stringify(cookieData), {
-        httpOnly: true,
-        maxAge: 60 * 60 * 24
-    })
-    // res.cookie("name", "Vikas", {
-    //     httpOnly: true,
-    //     maxAge: 60 * 60 * 24
-    // })
-    // res.setHeader(
-    //     "Set-Cookie",
-    //     cookie.stringifySetCookie({
-    //         name: "name",
-    //         value: "Vikas",
-    //         httpOnly: true,
-    //         maxAge: 60 * 60 * 24 * 7, // 1 week
-    //     }),
-    // );
-
-    res.send("Welcome to website");
-});
+app.use(session({
+    secret: 'nidgg bgbg bsdgs bnigbidbgibigbsbgilshbbs',
+    resave: false,
+    saveUninitialized: true,
+    store: MongoStore.create({ mongoUrl: 'mongodb://127.0.0.1:27017/session-store' })
+}))
 
 app.get('/login', (req, res) => {
-    res.send("You Need to Login Before you access website");
-})
-
-app.get('/website', (req, res) => {
-    // console.log(req.cookies.data)
-    
-    if (!req.cookies.data) {
-        return res.redirect('/login');
+    if (req.session.username) { // if session already have username then send this user
+        // to dashboard
+        return res.redirect('/dashboard');
     }
 
-    let cookieData = JSON.parse(req.cookies.data);
-    console.log(cookieData)
-    cookieData.count++;
-    res.cookie("data", JSON.stringify(cookieData), {
-        httpOnly: true,
-        maxAge: 60 * 60 * 24
-    })
-    res.send(`Hello Welcome to the website: ${cookieData.user} - Your Visit Count: ${cookieData.count}`);
+    const { username } = req.query;
+    req.session.username = username;
+    res.redirect('/dashboard');
 })
+
+app.get("/logout", (req, res) => {
+    req.session.destroy();
+    res.redirect('/login');
+})
+
+app.get('/dashboard', (req, res) => {
+    if (!req.session.username) { // if session doesnt have username then send this user
+        // to login
+        return res.redirect('/');
+    }
+
+    res.send("Welcome to dashboard <button> <a href='/logout'>Logout</a></button>")
+})
+
+/*
+// In memory hai yeh toh yeh system ko crash kar dega
+SESSION_MAP: {
+    session_id_1: {},
+    session_id_2: {user_2_Data},
+    session_id_3: {user_3_Data},
+}
+ */
+
 
 app.listen(PORT, () => {
     console.log(`http://localhost:` + PORT);
